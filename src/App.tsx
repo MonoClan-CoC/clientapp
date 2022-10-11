@@ -1,24 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import {ClansDetails, Repository} from "./services/repo";
 
 function App() {
+
+  const [clanDetails, setClanDetail] = useState<ClansDetails>();
+  const repo = new Repository();
+  useEffect(() => {
+    repo.function1().then((data) => {
+      setClanDetail(data)
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>
+        {clanDetails?.name}
+      </h1>
+          <table>
+              <thead>
+              <tr>
+                  <th>
+                      Rang
+                  </th>
+                  <th>
+                      Pseudo
+                  </th>
+                  <th>
+                     Niveau
+                  </th>
+                  <th>
+                     Role
+                  </th>
+                  <th>
+                     Ligue
+                  </th>
+                  <th>
+                     Trophées
+                  </th>
+              </tr>
+              </thead>
+              <tbody>
+              {clanDetails?.memberList?.map((member) =>
+                  <tr>
+                      <td>
+                          #{member.clanRank}
+                      </td>
+                      <td>
+                          {member.name}
+                      </td>
+                      <td>
+                          {member.expLevel}
+                      </td>
+                      <td>
+                          {member.role}
+                      </td>
+                      <td>
+                          <img width={25} src={member.league?.iconUrls?.small} />
+                      </td>
+                      <td>
+                          {member.trophies}
+                      </td>
+                  </tr>
+              )}
+              </tbody>
+          </table>
     </div>
   );
 }
