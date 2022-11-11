@@ -1,72 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
-import {ClansDetails, Repository} from "./services/repo";
+import Topbar from "./components/topbar/Topbar";
+import MemberTable from "./components/memberTable/MemberTable";
+import {BrowserRouter, createBrowserRouter, Link, Navigate, RouterProvider} from "react-router-dom";
+import Home from "./components/home/Home";
 
 function App() {
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Navigate to={"/members"} />,
 
-  const [clanDetails, setClanDetail] = useState<ClansDetails>();
-  const repo = new Repository();
-  useEffect(() => {
-    repo.function1().then((data) => {
-      setClanDetail(data)
-    })
-  }, [])
+        },
+        {
+            path: "/home",
+            element: <Home></Home>,
 
-  return (
-    <div>
-      <h1>
-        {clanDetails?.name}
-      </h1>
-          <table>
-              <thead>
-              <tr>
-                  <th>
-                      Rang
-                  </th>
-                  <th>
-                      Pseudo
-                  </th>
-                  <th>
-                     Niveau
-                  </th>
-                  <th>
-                     Role
-                  </th>
-                  <th>
-                     Ligue
-                  </th>
-                  <th>
-                     Trophées
-                  </th>
-              </tr>
-              </thead>
-              <tbody>
-              {clanDetails?.memberList?.map((member) =>
-                  <tr>
-                      <td>
-                          #{member.clanRank}
-                      </td>
-                      <td>
-                          {member.name}
-                      </td>
-                      <td>
-                          {member.expLevel}
-                      </td>
-                      <td>
-                          {member.role}
-                      </td>
-                      <td>
-                          <img width={25} src={member.league?.iconUrls?.small} />
-                      </td>
-                      <td>
-                          {member.trophies}
-                      </td>
-                  </tr>
-              )}
-              </tbody>
-          </table>
-    </div>
-  );
+        },
+        {
+            path: "/members",
+            element: <MemberTable></MemberTable>,
+
+        },
+    ]);
+    return (
+        <>
+            <Topbar></Topbar>
+            <RouterProvider router={router} />
+
+        </>
+    );
 }
 
 export default App;

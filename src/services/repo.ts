@@ -20,8 +20,8 @@ export class Repository {
     /**
      * @return The OK response
      */
-    function1(): Promise<ClansDetails> {
-        let url_ = this.baseUrl + "/Function1";
+    run(): Promise<ClansDetails> {
+        let url_ = this.baseUrl + "/GetClan";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
@@ -32,11 +32,11 @@ export class Repository {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processFunction1(_response);
+            return this.processRun(_response);
         });
     }
 
-    protected processFunction1(response: Response): Promise<ClansDetails> {
+    protected processRun(response: Response): Promise<ClansDetails> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
