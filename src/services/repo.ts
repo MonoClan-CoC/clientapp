@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export class Repository {
+
     private data: string = JSON.stringify({
         "collection": "ClansDetails",
         "database": "MonoClan",
@@ -9,11 +10,13 @@ export class Repository {
 
     private config: any = {
         method: 'post',
-        url: 'https://data.mongodb-api.com/app/data-lfpip/endpoint/data/v1/action/findOne',
+        url: 'https://realm.mongodb.com/api/client/v2.0/app/data-lfpip/graphql',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': 'iEcKHLItZw5i2q81DzQzKrNFxO3Lv5dcZJHvUh2E5Ykv9yIrfbM8bqdHbqjKf8d7',
+            //"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            'apikey': 'kwUbfBPnawSfNzgzWOrZwM5g4IyAGQmH2nTYmYUuDn8CjYtgbWiTkB9hEnsnEWUl',
+            'Access-Control-Allow-Origin':'*'
         },
         data: this.data
     };
@@ -21,7 +24,7 @@ export class Repository {
     public constructor() {
     }
 
-    public fetchData(): void {
+    public async fetchData(): Promise<void> {
         axios(this.config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
