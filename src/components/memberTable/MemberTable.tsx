@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './MemberTable.css';
-import { Repository } from "../../services/repo";
 import { useQuery } from "@apollo/client";
 import {gql} from "graphql-tag";
 
 
 // @ts-ignore
 const CLAN_DETAIL = gql`
-    query {
+   query {
   clansDetail {
     _id
 \t\tclanLevel
@@ -16,6 +15,27 @@ const CLAN_DETAIL = gql`
 \t\tdescription
 \t\tisWarLogPublic
 \t\tmembers
+    memberList {
+      clanRank
+      donations
+      donationsReceived
+      expLevel
+      name
+      previousClanRank
+      role
+      tag
+      trophies
+      versusTrophies
+      league {
+        id
+        iconUrls{
+          tiny
+          small
+          medium
+        }
+        name
+      }
+    }
 \t\tname
 \t\trequiredTownhallLevel
 \t\trequiredTrophies
@@ -33,22 +53,12 @@ function MemberTable() {
 
   const [clanDetails, setClanDetail] = useState<any>();
   const [selectedMember, setSelectedMember] = useState<any>();
-  const repo = new Repository();
 
   const { loading, error, data } = useQuery(CLAN_DETAIL);
 
-
-  useEffect(() => {
-    repo.fetchData();
-  }, [])
-
-  if (data) {
-    return <pre>{ JSON.stringify(data,null,2) }</pre>
-  }
-
   return (
     <>
-      { clanDetails &&
+      { data &&
       <div className="memberContainer">
           <table className="tableContainer">
               <thead>
@@ -74,7 +84,7 @@ function MemberTable() {
               </tr>
               </thead>
               <tbody>
-              { clanDetails?.memberList?.map((member: any) =>
+              { data.clansDetail?.memberList?.map((member: any) =>
                 <tr className="row" onClick={ () => setSelectedMember(member) }>
                   <td>
                     #{ member.clanRank }
@@ -115,7 +125,7 @@ function MemberTable() {
       </div>
       }
       {
-        !clanDetails &&
+        !data &&
         <div className="lds-container">
             <div className="lds-ring">
                 <div></div>
