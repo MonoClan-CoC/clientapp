@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import './MemberTable.css';
-import {ClanMember, ClansDetails, Repository} from "../../services/repo";
+import {Repository} from "../../services/repo";
 
 function MemberTable() {
 
-    const [clanDetails, setClanDetail] = useState<ClansDetails>();
-    const [selectedMember, setSelectedMember] = useState<ClanMember>();
+    const [clanDetails, setClanDetail] = useState<any>();
+    const [selectedMember, setSelectedMember] = useState<any>();
     const repo = new Repository();
 
     useEffect(() => {
-        repo.run().then((data) => {
-            setClanDetail(data)
-        })
+        repo.fetchData();
     }, [])
 
     return (
@@ -42,7 +40,7 @@ function MemberTable() {
                         </tr>
                         </thead>
                         <tbody>
-                        {clanDetails?.memberList?.map((member) =>
+                        {clanDetails?.memberList?.map((member: any) =>
                             <tr className="row" onClick={() => setSelectedMember(member)}>
                                 <td>
                                     #{member.clanRank}
