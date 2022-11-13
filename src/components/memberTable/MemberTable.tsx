@@ -26,7 +26,7 @@ function MemberTable() {
         switch (role) {
             case 'leader':
                 return 'Chef';
-            case '':
+            case 'coLeader':
                 return 'Admin';
             case 'admin':
                 return 'Aîné';
