@@ -55,7 +55,7 @@ function MemberTable() {
                 <tbody>
                 {data.clansDetail?.memberList?.map((member: any) =>
                     <>
-                      <tr className="row" onClick={() => setSelectedMember(member)}>
+                      <tr className="row" onClick={() => setSelectedMember(selectedMember ? null : member)}>
                         <td>#{member.clanRank}</td>
                         <td>{member.name}</td>
                         <td>{member.expLevel}</td>
