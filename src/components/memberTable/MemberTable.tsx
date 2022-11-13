@@ -9,7 +9,35 @@ function MemberTable() {
   const [selectedMember, setSelectedMember] = useState<any>();
   const {loading, error, data} = useQuery(QUERY_CLAN_DETAIL);
 
-  return (
+    function getClassWithMemberRole(role: string): string {
+        switch (role) {
+            case 'coLeader':
+                return 'coLeaderCase';
+            case 'leader':
+                return 'leaderCase';
+            case 'admin':
+            default:
+                return 'adminCase';
+
+        }
+    }
+
+    function getMemberRoleTranslated(role: string): string {
+        switch (role) {
+            case 'leader':
+                return 'Chef';
+            case '':
+                return 'Admin';
+            case 'admin':
+                return 'Aîné';
+            case 'member':
+            default:
+                return 'Membre';
+
+        }
+    }
+
+    return (
       <>
         {data &&
             <div className="memberContainer">
@@ -31,7 +59,11 @@ function MemberTable() {
                         <td>#{member.clanRank}</td>
                         <td>{member.name}</td>
                         <td>{member.expLevel}</td>
-                        <td className={member.role === 'leader' ? 'leaderCase' : member.role === 'coLeader' ? 'coLeaderCase' : ''}> {member.role}</td>
+                        <td>
+                            <div className={'role ' + getClassWithMemberRole(member.role)}>
+                                {getMemberRoleTranslated(member.role)}
+                            </div>
+                        </td>
                         <td><img width={25} src={member.league?.iconUrls?.small}/></td>
                         <td> {member.trophies} </td>
                       </tr>

@@ -21,10 +21,14 @@ td{
 
 .leaderCase {
     background-color: #e1a231;
+    color: #62450b;
+    border: 1px solid #9f701a;
 }
 
 .coLeaderCase{
     background-color: silver;
+    color: #4b4b4b;
+    border: 1px solid rgba(94, 94, 94, 0.52);
 }
 
 .row{
@@ -38,6 +42,11 @@ td{
     transform: scale(1.025);
     transition: 0.2s ease;
     background-color: #dedddd;
+}
+
+.role{
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .memberDetailsContainer{
