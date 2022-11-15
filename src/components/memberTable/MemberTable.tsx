@@ -55,7 +55,7 @@ function MemberTable() {
                 <tbody>
                 {data.clansDetail?.memberList?.map((member: any) =>
                     <>
-                      <tr className="row" onClick={() => setSelectedMember(selectedMember ? null : member)}>
+                      <tr className="row" onClick={() => setSelectedMember(selectedMember?.tag == member?.tag ? null : member)}>
                         <td>#{member.clanRank}</td>
                         <td>{member.name}</td>
                         <td>{member.expLevel}</td>
@@ -68,7 +68,7 @@ function MemberTable() {
                         <td> {member.trophies} </td>
                       </tr>
                       {
-                          selectedMember == member &&
+                          selectedMember?.tag == member?.tag &&
                           <tr className="memberDetailsContainer">
                             <td colSpan={6}>
                               <MemberDetails selectedMember={selectedMember}/>
